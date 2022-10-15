@@ -1,4 +1,11 @@
 <script lang="ts">
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import firebaseConfig from "./firebase";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 class Field {
   name: string;
   doing: string;
@@ -16,7 +23,11 @@ class Field {
 export default {
   data() {
     return {
-      parentMessage: "Parent",
+      banner: {
+        text: "",
+        style: "loading",
+        shown: false,
+      },
       items: [
         new Field("Educational"),
         new Field("Financial"),
@@ -26,13 +37,68 @@ export default {
       ],
     };
   },
+
+  methods: {
+    async submitForm() {
+      let valid = true;
+
+      this.banner = {
+        text: "Loading...",
+        style: "loading",
+        shown: true,
+      };
+
+      const dateStamp = new Date();
+
+      let data: any = { dateStamp };
+
+      for (const item of this.items) {
+        item.plan = item.plan.trim();
+        item.doing = item.doing.trim();
+
+        if (item.plan === "" || item.doing === "") {
+          valid = false;
+          this.banner = {
+            text: "Fill Everything In!",
+            style: "error",
+            shown: true,
+          };
+        }
+
+        data[item.name] = {
+          name: item.name,
+          doing: item.doing,
+          score: item.score,
+          plan: item.plan,
+        };
+      }
+
+      try {
+        if (valid) {
+          const docRef = await addDoc(collection(db, "feels"), data);
+          console.log("Document written with ID: ", docRef.id);
+          this.banner = {
+            text: "Form submitted successfully!",
+            style: "success",
+            shown: true,
+          };
+        }
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+
+      setTimeout(() => {
+        this.banner.shown = false;
+      }, 5000);
+    },
+  },
 };
 </script>
 
 <template>
   <div class="flex-cont">
     <div v-for="item in items">
-      <div class="row">
+      <div class="col">
         <h3>{{ item.name }}</h3>
         <textarea
           placeholder="Currently Doing..."
@@ -57,7 +123,11 @@ export default {
     </div>
   </div>
 
-  <button class="btn">Submit</button>
+  <button @click="submitForm">Submit</button>
+
+  <div :class="banner.style + ' banner'" v-if="banner.shown">
+    {{ banner.text }}
+  </div>
 </template>
 
 <style scoped>
@@ -85,7 +155,7 @@ export default {
   font-family: "Roboto", sans-serif;
 }
 
-.row {
+.col {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,20 +163,24 @@ export default {
   align-content: center;
   padding: 0 20px;
   margin: 0;
-  min-width: 300px;
+  min-width: 400px;
   border-right: 2px solid #4fffc4;
   height: 100%;
 }
 
-.row > * {
+.col > * {
   width: 100%;
   padding: 0;
   margin: 10px 0;
   height: 40px;
 }
 
-.row > .large {
-  height: 150px;
+.col > .large {
+  height: 200px;
+}
+
+.col:first-of-type {
+  border-left: 2px solid #4fffc4;
 }
 
 textarea {
@@ -200,5 +274,34 @@ button {
   font-weight: bold;
   cursor: pointer;
   transition: ease 0.2s;
+}
+
+.banner {
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 90%;
+  background-color: #111;
+}
+
+.banner.success {
+  border: 2px solid #4fffc4;
+  color: #4fffc4;
+}
+
+.banner.error {
+  border: 2px solid #ff4f4f;
+  color: #ff4f4f;
+}
+
+.banner.loading {
+  border: 2px solid #4da9ff;
+  color: #4da9ff;
 }
 </style>
