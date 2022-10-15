@@ -24,7 +24,7 @@ This is designed to be small and minimalistic, so it is easy to use and doesn't 
 
 - [Vue](https://vuejs.org/)
 - [Firebase](https://firebase.google.com/)
-- [Netlify](https://www.netlify.com/)
+- [Cloudflare Pages](https://pages.cloudflare.com/)
 - [Cloudflare](https://www.cloudflare.com/)
 
 ## Project Setup
