@@ -1,4 +1,4 @@
-import HelloWorldVue from "@/components/HelloWorld.vue";
+import FormVue from "@/components/form.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HelloWorldVue,
+      component: FormVue,
     },
     {
       path: "/about",
