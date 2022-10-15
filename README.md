@@ -1,39 +1,53 @@
-# life-eval
+# Life Evaluation
 
-This template should help get you started developing with Vue 3 in Vite.
+## What is this?
 
-## Recommended IDE Setup
+Every month I evaluate my life and try to improve it, I do this based on 5 metrics:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Educational
+- Financial
+- Physical
+- Social
+- Societal
 
-## Type Support for `.vue` Imports in TS
+I examine what I have been doing to improve these aspects of my life, give myself a score out of 5, then describe what I will do to improve each area in the coming month.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+I have noticed interesting trends and since I do this often, I thought I should spend 2 hours making a site, linked to firebase to store my data and streamline the process.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+The link is not public for obvious reasons, but if you think this evaluation style will help you, feel free to fork this repo and make your own site.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+This is designed to be small and minimalistic, so it is easy to use and doesn't take up too much time. Additionally it is designed to be broad to evaluate my life at any point.
 
-## Customize configuration
+![Screenshot](./screenshot.png)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Built with
+
+- [Vue](https://vuejs.org/)
+- [Firebase](https://firebase.google.com/)
+- [Netlify](https://www.netlify.com/)
+- [Cloudflare](https://www.cloudflare.com/)
 
 ## Project Setup
+
+### Prerequisites
+
+1. create a firebase project with a fireStore database
+2. Copy the firebase config and paste it in `src/components/firebase.ts`
+3. This is required for the site to store any data
+
+### Install Dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Production Build
 
 ```sh
 npm run build
