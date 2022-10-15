@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import firebaseConfig from "./firebase";
+import { defineComponent } from "vue";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -20,7 +21,7 @@ class Field {
   }
 }
 
-export default {
+export default defineComponent({
   data() {
     return {
       banner: {
@@ -92,7 +93,7 @@ export default {
       }, 5000);
     },
   },
-};
+});
 </script>
 
 <template>
